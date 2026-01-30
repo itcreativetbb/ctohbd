@@ -70,61 +70,83 @@ const Hero = () => {
     }, [charIndex, lineIndex, fullText]);
 
     return (
-        <header className="flex flex-col items-center justify-center min-h-[80vh] py-10 space-y-12">
-            {/* Terminal Section */}
-            <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8 }}
-                className="w-full max-w-3xl bg-[#161b22] border border-[#30363d] rounded-lg shadow-2xl overflow-hidden box-glow"
-            >
-                <div className="flex items-center px-4 py-2 bg-[#0d1117] border-b border-[#30363d]">
-                    <div className="flex space-x-2">
-                        <div className="w-3 h-3 rounded-full bg-[#ff5f56]"></div>
-                        <div className="w-3 h-3 rounded-full bg-[#ffbd2e]"></div>
-                        <div className="w-3 h-3 rounded-full bg-[#27c93f]"></div>
+        <header className="relative flex flex-col items-center justify-center min-h-[90vh] py-20 overflow-hidden">
+
+            {/* Blended Background Image - Magic Transformation */}
+            <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-r from-[#0d1117] via-[#0d1117]/80 to-transparent z-10"></div>
+                <div className="absolute bottom-0 right-0 w-full md:w-1/2 h-full z-0 opacity-60 mix-blend-screen grayscale-[20%]">
+                    <img
+                        src="/images/elorm-hero.jpg"
+                        alt="Elorm Oscar"
+                        className="w-full h-full object-cover object-top mask-image-gradient"
+                        style={{
+                            maskImage: 'linear-gradient(to left, black 40%, transparent 100%)',
+                            WebkitMaskImage: 'linear-gradient(to left, black 40%, transparent 100%)'
+                        }}
+                    />
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0d1117] via-transparent to-transparent z-10"></div>
+            </div>
+
+            <div className="relative z-20 w-full max-w-7xl mx-auto px-4 grid md:grid-cols-2 gap-12 items-center">
+
+                {/* Text Content - Left Side */}
+                <div className="space-y-8">
+                    <motion.h1
+                        initial={{ opacity: 0, x: -50 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.8 }}
+                        className="font-bold font-sans tracking-tight leading-tight text-left"
+                        style={{ fontSize: "clamp(3rem, 6vw, 5rem)" }}
+                    >
+                        Building the <br />
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-purple-500">Future</span>
+                        <span className="text-white"> & </span> <br />
+                        Breaking <span className="text-accent underline decoration-4 decoration-accent/30">Changes</span>
+                    </motion.h1>
+
+                    {/* Countdown */}
+                    <div className="grid grid-cols-4 gap-4 max-w-lg">
+                        {Object.entries(timeLeft).map(([label, value]) => {
+                            if (label === 'days' || label === 'hours' || label === 'minutes' || label === 'seconds') { // safety
+                                return (
+                                    <div key={label} className="text-center">
+                                        <div className="font-mono font-bold text-white text-2xl md:text-3xl">
+                                            {String(value).padStart(2, '0')}
+                                        </div>
+                                        <div className="text-[10px] uppercase tracking-widest text-gray-500">{label}</div>
+                                    </div>
+                                )
+                            }
+                        })}
                     </div>
-                    <div className="ml-4 text-xs text-gray-400 font-mono">bash</div>
                 </div>
-                <div className="p-6 font-mono text-sm md:text-base text-gray-300 min-h-[200px]">
-                    {text.split('\n').map((line, i) => (
-                        <div key={i} className="mb-2">
-                            <span className="text-accent mr-2">$</span>
-                            <span className="break-all">{line}</span>
-                            {i === lineIndex && (
-                                <span className="inline-block w-2.5 h-5 bg-accent ml-1 animate-cursor-blink align-middle"></span>
-                            )}
-                        </div>
-                    ))}
-                </div>
-            </motion.div>
 
-            {/* Hero Title and Countdown */}
-            <div className="text-center space-y-8 px-4 w-full">
-                <motion.h1
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 0.5, duration: 0.5 }}
-                    className="font-bold font-sans tracking-tight leading-tight"
-                    style={{ fontSize: "clamp(2.5rem, 8vw, 5rem)" }}
-                >
-                    Full-Stack Dev Birthday <span className="text-accent underline decoration-4 decoration-accent/30">v3.0.0</span>
-                </motion.h1>
-
+                {/* Terminal - Right Side (Floating over image area but readable) */}
                 <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.8 }}
-                    className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 max-w-4xl mx-auto"
+                    initial={{ opacity: 0, y: 50 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3, duration: 0.8 }}
+                    className="w-full bg-[#161b22]/90 backdrop-blur-sm border border-[#30363d] rounded-lg shadow-2xl overflow-hidden box-glow transform md:translate-y-12"
                 >
-                    {Object.entries(timeLeft).map(([label, value]) => (
-                        <div key={label} className="bg-[#161b22]/80 backdrop-blur-md border border-[#30363d] p-4 rounded-xl text-center glow-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/50 box-glow-hover">
-                            <div className="font-mono font-bold text-white mb-2" style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)" }}>
-                                {String(value).padStart(2, '0')}
-                            </div>
-                            <div className="text-xs uppercase tracking-widest text-gray-500">{label}</div>
+                    <div className="flex items-center px-4 py-2 bg-[#0d1117] border-b border-[#30363d]">
+                        <div className="flex space-x-2">
+                            <div className="w-3 h-3 rounded-full bg-[#ff5f56]"></div>
+                            <div className="w-3 h-3 rounded-full bg-[#ffbd2e]"></div>
+                            <div className="w-3 h-3 rounded-full bg-[#27c93f]"></div>
                         </div>
-                    ))}
+                        <div className="ml-4 text-xs text-gray-400 font-mono">bash ~ elorm-oscar</div>
+                    </div>
+                    <div className="p-6 font-mono text-sm md:text-base text-gray-300 min-h-[250px]">
+                        {text.split('\n').map((line, i) => (
+                            <div key={i} className="mb-2">
+                                <span className="text-accent mr-2">$</span>
+                                <span className="break-all">{line}</span>
+                            </div>
+                        ))}
+                        <span className="inline-block w-2.5 h-5 bg-accent ml-1 animate-cursor-blink align-middle"></span>
+                    </div>
                 </motion.div>
             </div>
         </header>
