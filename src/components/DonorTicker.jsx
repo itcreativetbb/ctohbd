@@ -51,9 +51,9 @@ const DonorTicker = () => {
         );
     }
 
-    // Format strings: "NAME ($AMOUNT) - MESSAGE"
+    // Format strings: "NAME (AMOUNT) - MESSAGE"
     const tickerItems = donors.map(d => {
-        const amountDisplay = d.amount ? `$${d.amount}` : '';
+        const amountDisplay = d.amount ? `GH₵${d.amount}` : '';
         // Note: We need to ensure we save amount in DB for this to work perfectly.
         // Fallback message if not provided
         const message = "this person also appreciated thanks to him";
