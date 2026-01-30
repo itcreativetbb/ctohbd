@@ -19,6 +19,14 @@ const SpinToWin = () => {
     const [rotation, setRotation] = useState(0);
     const [wonPrize, setWonPrize] = useState(null);
 
+    // Check for existing win on mount
+    React.useEffect(() => {
+        const savedPrize = localStorage.getItem('cto_birthday_win');
+        if (savedPrize) {
+            setWonPrize(JSON.parse(savedPrize));
+        }
+    }, []);
+
     const triggerConfetti = async () => {
         const confetti = (await import('canvas-confetti')).default;
         const duration = 3000;
@@ -58,6 +66,7 @@ const SpinToWin = () => {
         setTimeout(() => {
             setIsSpinning(false);
             setWonPrize(prizes[randomIndex]);
+            localStorage.setItem('cto_birthday_win', JSON.stringify(prizes[randomIndex]));
             triggerConfetti();
         }, 5000);
     };
