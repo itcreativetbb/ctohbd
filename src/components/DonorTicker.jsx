@@ -32,8 +32,9 @@ const DonorTicker = () => {
 
         if (error) {
             console.error('Error fetching winners:', error);
+            setWinners([]); // Ensure array on error
         } else {
-            setWinners(data);
+            setWinners(data || []); // Ensure array if data is null
         }
         setLoading(false);
     };
