@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Gift, X, PartyPopper, ChevronRight, Palette, Code, Video, Download, Terminal, Zap, Briefcase, Sparkles } from 'lucide-react';
+import { Gift, X, PartyPopper, ChevronRight, Palette, Code, Video, Download, Terminal, Zap, Briefcase, Sparkles, User, ArrowRight } from 'lucide-react';
 
 const prizes = [
     { id: 1, label: 'Mentorship', icon: <Video size={14} />, color: '#7c3aed', textColor: '#ffffff', link: 'https://cal.com/elormoscar' }, // Violet
@@ -18,10 +18,20 @@ const SpinToWin = () => {
     const [isSpinning, setIsSpinning] = useState(false);
     const [rotation, setRotation] = useState(0);
     const [wonPrize, setWonPrize] = useState(null);
+    const [userName, setUserName] = useState('');
+    const [tempName, setTempName] = useState(''); // For input field
+    const [showNameInput, setShowNameInput] = useState(true);
 
-    // Check for existing win on mount
+    // Check for existing win and user on mount
     React.useEffect(() => {
         const savedPrizeId = localStorage.getItem('cto_birthday_win_id');
+        const savedName = localStorage.getItem('cto_birthday_username');
+
+        if (savedName) {
+            setUserName(savedName);
+            setShowNameInput(false);
+        }
+
         if (savedPrizeId) {
             const foundPrize = prizes.find(p => p.id === parseInt(savedPrizeId));
             if (foundPrize) {
@@ -29,6 +39,15 @@ const SpinToWin = () => {
             }
         }
     }, []);
+
+    const handleSaveName = (e) => {
+        e.preventDefault();
+        if (tempName.trim()) {
+            localStorage.setItem('cto_birthday_username', tempName.trim());
+            setUserName(tempName.trim());
+            setShowNameInput(false);
+        }
+    };
 
     const triggerConfetti = async () => {
         const confetti = (await import('canvas-confetti')).default;
@@ -134,96 +153,135 @@ const SpinToWin = () => {
                                 <X size={24} />
                             </button>
 
-                            <h3 className="text-3xl font-bold text-center text-white mb-8 tracking-tight z-10">
-                                Spin & <span className="text-accent">Win</span>
-                            </h3>
-
-                            <div className="relative w-72 h-72 md:w-80 md:h-80 mb-8 z-10 shrink-0">
-                                {/* Pointer */}
-                                <div className="absolute top-[-20px] left-1/2 -translate-x-1/2 z-30 filter drop-shadow-xl">
-                                    <div
-                                        className="w-10 h-12 bg-gradient-to-b from-white to-gray-200"
-                                        style={{ clipPath: 'polygon(50% 100%, 0% 0%, 100% 0%)' }}
-                                    ></div>
-                                </div>
-
-                                {/* Wheel Container with Border */}
-                                <div className="relative w-full h-full p-3 rounded-full bg-gradient-to-b from-[#4a5568] to-[#1a202c] shadow-[0_0_30px_rgba(0,0,0,0.8)] border-4 border-[#2d3748]">
-                                    <motion.div
-                                        className="w-full h-full rounded-full relative overflow-hidden shadow-[inset_0_0_20px_rgba(0,0,0,0.5)]"
-                                        animate={{ rotate: rotation }}
-                                        transition={{ duration: 5, type: "tween", ease: [0.13, 0.99, 0.29, 0.99] }} // Custom bezier for realistic spin
-                                        style={{
-                                            background: `conic-gradient(
-                                                ${prizes.map((p, i) => `${p.color} ${i * (100 / prizes.length)}% ${(i + 1) * (100 / prizes.length)}%`).join(', ')}
-                                            )`
-                                        }}
-                                    >
-                                        {/* Segments Text & Icons */}
-                                        {prizes.map((prize, i) => {
-                                            const rotation = (360 / prizes.length) * i + (360 / prizes.length) / 2;
-                                            return (
-                                                <div
-                                                    key={prize.id}
-                                                    className="absolute w-full h-full top-0 left-0 flex justify-center pt-2"
-                                                    style={{
-                                                        transform: `rotate(${rotation}deg)`,
-                                                    }}
-                                                >
-                                                    <div className="flex flex-col items-center gap-2" style={{ color: prize.textColor }}>
-                                                        <span className="bg-black/20 p-1.5 rounded-full backdrop-blur-sm shadow-sm">{prize.icon}</span>
-                                                        <span
-                                                            className="font-bold text-[10px] md:text-xs uppercase tracking-wider drop-shadow-md"
-                                                            style={{ writingMode: 'vertical-rl', textOrientation: 'mixed' }}
-                                                        >
-                                                            {prize.label}
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            );
-                                        })}
-
-                                        {/* Inner Hub Shine (Overlay) */}
-                                        <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-transparent via-white/10 to-transparent pointer-events-none"></div>
-                                    </motion.div>
-
-                                    {/* Center Hub */}
-                                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 bg-white rounded-full shadow-[0_0_20px_rgba(0,0,0,0.5)] flex items-center justify-center z-20 border-4 border-[#161b22]">
-                                        <Gift className="w-6 h-6 text-[#161b22]" />
+                            {/* Conditional Rendering: Name Input OR Wheel */}
+                            {showNameInput && !wonPrize ? (
+                                <div className="z-10 w-full max-w-sm flex flex-col items-center py-10">
+                                    <div className="bg-accent/10 p-4 rounded-full mb-6">
+                                        <User className="w-10 h-10 text-accent" />
                                     </div>
-                                </div>
-                            </div>
+                                    <h3 className="text-2xl font-bold text-white mb-2 text-center">One Last Step!</h3>
+                                    <p className="text-gray-400 mb-8 text-center text-sm">Enter your name to unlock your birthday spin.</p>
 
-                            <div className="text-center h-24">
-                                {wonPrize ? (
-                                    <motion.div
-                                        initial={{ opacity: 0, y: 10 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                    >
-                                        <p className="text-gray-400 text-sm mb-2">You won:</p>
-                                        <h4 className="text-xl font-bold text-accent mb-4 flex items-center justify-center gap-2">
-                                            {wonPrize.icon} {wonPrize.label}
-                                        </h4>
-                                        <a
-                                            href={wonPrize.link}
-                                            target="_blank"
-                                            rel="noreferrer"
-                                            className="inline-block bg-accent hover:bg-white text-black font-bold py-2 px-6 rounded-full text-sm transition-colors"
+                                    <form onSubmit={handleSaveName} className="w-full">
+                                        <div className="relative mb-6">
+                                            <input
+                                                type="text"
+                                                value={tempName}
+                                                onChange={(e) => setTempName(e.target.value)}
+                                                placeholder="What's your name?"
+                                                className="w-full bg-[#0d1117] border border-[#30363d] text-white px-5 py-4 rounded-xl focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-all text-center placeholder-gray-600 font-bold"
+                                                autoFocus
+                                            />
+                                        </div>
+                                        <button
+                                            type="submit"
+                                            disabled={!tempName.trim()}
+                                            className="w-full bg-accent hover:bg-white text-black font-bold py-4 rounded-xl text-lg transition-all shadow-lg hover:shadow-accent/50 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                                         >
-                                            Claim Prize
-                                        </a>
-                                    </motion.div>
-                                ) : (
-                                    <button
-                                        onClick={spinWheel}
-                                        disabled={isSpinning}
-                                        className="w-full bg-white/10 hover:bg-white/20 text-white font-bold py-3 px-6 rounded-xl border border-white/20 transition-all disabled:opacity-50"
-                                    >
-                                        {isSpinning ? 'Spinning...' : 'SPIN NOW!'}
-                                    </button>
-                                )}
-                            </div>
+                                            Continue to Spin <ArrowRight size={20} />
+                                        </button>
+                                    </form>
+                                </div>
+                            ) : (
+                                <>
+                                    <h3 className="text-3xl font-bold text-center text-white mb-2 tracking-tight z-10">
+                                        Spin & <span className="text-accent">Win</span>
+                                    </h3>
+                                    {userName && (
+                                        <p className="text-gray-400 text-sm mb-6 z-10 font-mono border border-white/10 bg-white/5 px-3 py-1 rounded-full">
+                                            Player: <span className="text-white font-bold">{userName}</span>
+                                        </p>
+                                    )}
 
+                                    <div className="relative w-72 h-72 md:w-80 md:h-80 mb-8 z-10 shrink-0">
+                                        {/* Pointer */}
+                                        <div className="absolute top-[-20px] left-1/2 -translate-x-1/2 z-30 filter drop-shadow-xl">
+                                            <div
+                                                className="w-10 h-12 bg-gradient-to-b from-white to-gray-200"
+                                                style={{ clipPath: 'polygon(50% 100%, 0% 0%, 100% 0%)' }}
+                                            ></div>
+                                        </div>
+
+                                        {/* Wheel Container with Border */}
+                                        <div className="relative w-full h-full p-3 rounded-full bg-gradient-to-b from-[#4a5568] to-[#1a202c] shadow-[0_0_30px_rgba(0,0,0,0.8)] border-4 border-[#2d3748]">
+                                            <motion.div
+                                                className="w-full h-full rounded-full relative overflow-hidden shadow-[inset_0_0_20px_rgba(0,0,0,0.5)]"
+                                                animate={{ rotate: rotation }}
+                                                transition={{ duration: 5, type: "tween", ease: [0.13, 0.99, 0.29, 0.99] }} // Custom bezier for realistic spin
+                                                style={{
+                                                    background: `conic-gradient(
+                                                        ${prizes.map((p, i) => `${p.color} ${i * (100 / prizes.length)}% ${(i + 1) * (100 / prizes.length)}%`).join(', ')}
+                                                    )`
+                                                }}
+                                            >
+                                                {/* Segments Text & Icons */}
+                                                {prizes.map((prize, i) => {
+                                                    const rotation = (360 / prizes.length) * i + (360 / prizes.length) / 2;
+                                                    return (
+                                                        <div
+                                                            key={prize.id}
+                                                            className="absolute w-full h-full top-0 left-0 flex justify-center pt-2"
+                                                            style={{
+                                                                transform: `rotate(${rotation}deg)`,
+                                                            }}
+                                                        >
+                                                            <div className="flex flex-col items-center gap-2" style={{ color: prize.textColor }}>
+                                                                <span className="bg-black/20 p-1.5 rounded-full backdrop-blur-sm shadow-sm">{prize.icon}</span>
+                                                                <span
+                                                                    className="font-bold text-[10px] md:text-xs uppercase tracking-wider drop-shadow-md"
+                                                                    style={{ writingMode: 'vertical-rl', textOrientation: 'mixed' }}
+                                                                >
+                                                                    {prize.label}
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    );
+                                                })}
+
+                                                {/* Inner Hub Shine (Overlay) */}
+                                                <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-transparent via-white/10 to-transparent pointer-events-none"></div>
+                                            </motion.div>
+
+                                            {/* Center Hub */}
+                                            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 bg-white rounded-full shadow-[0_0_20px_rgba(0,0,0,0.5)] flex items-center justify-center z-20 border-4 border-[#161b22]">
+                                                <Gift className="w-6 h-6 text-[#161b22]" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="text-center h-24">
+                                        {wonPrize ? (
+                                            <motion.div
+                                                initial={{ opacity: 0, y: 10 }}
+                                                animate={{ opacity: 1, y: 0 }}
+                                            >
+                                                <p className="text-gray-400 text-sm mb-2">
+                                                    {userName}, you won:
+                                                </p>
+                                                <h4 className="text-xl font-bold text-accent mb-4 flex items-center justify-center gap-2">
+                                                    {wonPrize.icon} {wonPrize.label}
+                                                </h4>
+                                                <a
+                                                    href={wonPrize.link}
+                                                    target="_blank"
+                                                    rel="noreferrer"
+                                                    className="inline-block bg-accent hover:bg-white text-black font-bold py-2 px-6 rounded-full text-sm transition-colors"
+                                                >
+                                                    Claim Prize
+                                                </a>
+                                            </motion.div>
+                                        ) : (
+                                            <button
+                                                onClick={spinWheel}
+                                                disabled={isSpinning}
+                                                className="w-full bg-white/10 hover:bg-white/20 text-white font-bold py-3 px-6 rounded-xl border border-white/20 transition-all disabled:opacity-50"
+                                            >
+                                                {isSpinning ? 'Spinning...' : 'SPIN NOW!'}
+                                            </button>
+                                        )}
+                                    </div>
+                                </>
+                            )}
                         </motion.div>
                     </motion.div>
                 )}
