@@ -109,7 +109,7 @@ const SpinToWin = () => {
                             animate={{ scale: 1, opacity: 1, y: 0 }}
                             exit={{ scale: 0.8, opacity: 0, y: 50 }}
                             onClick={(e) => e.stopPropagation()}
-                            className="bg-gradient-to-b from-[#1c2128] to-[#161b22] border-2 border-white/10 rounded-3xl p-6 md:p-10 w-[95%] md:max-w-xl w-full relative shadow-[0_0_60px_rgba(124,58,237,0.15)] overflow-hidden flex flex-col items-center"
+                            className="bg-gradient-to-b from-[#1c2128] to-[#161b22] border-2 border-white/10 rounded-3xl p-6 md:p-10 w-[95%] md:max-w-xl w-full relative shadow-[0_0_60px_rgba(124,58,237,0.15)] overflow-y-auto max-h-[90vh] flex flex-col items-center custom-scrollbar"
                         >
                             {/* Background Glow */}
                             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-[400px] bg-accent/5 blur-[120px] pointer-events-none rounded-full"></div>
