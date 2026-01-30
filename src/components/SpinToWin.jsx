@@ -132,7 +132,7 @@ const SpinToWin = () => {
                             animate={{ scale: 1, opacity: 1, y: 0 }}
                             exit={{ scale: 0.8, opacity: 0, y: 50 }}
                             onClick={(e) => e.stopPropagation()}
-                            className="bg-[#0f1218] border border-[#30363d] rounded-3xl p-6 md:p-10 max-w-md w-full relative shadow-[0_0_50px_rgba(0,0,0,0.5)] overflow-hidden flex flex-col items-center"
+                            className="bg-[#0f1218] border border-[#30363d] rounded-3xl p-6 md:p-10 w-[95%] md:max-w-2xl w-full relative shadow-[0_0_50px_rgba(0,0,0,0.5)] overflow-hidden flex flex-col items-center"
                         >
                             {/* Background Glow */}
                             <div className="absolute top-0 transform -translate-y-1/2 w-full h-64 bg-accent/20 blur-[100px] pointer-events-none"></div>
