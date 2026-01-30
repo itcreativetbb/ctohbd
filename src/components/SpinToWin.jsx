@@ -3,14 +3,14 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Gift, X, PartyPopper, ChevronRight, Palette, Code, Video, Download, Terminal, Zap, Briefcase, Sparkles } from 'lucide-react';
 
 const prizes = [
-    { id: 1, label: '1:1 Mentorship', icon: <Video size={16} />, color: '#7c3aed', link: 'https://cal.com/elormoscar' },
-    { id: 2, label: 'Dev Course', icon: <Code size={16} />, color: '#db2777', link: '#' },
-    { id: 3, label: 'UI Kit', icon: <Palette size={16} />, color: '#ea580c', link: '#' },
-    { id: 4, label: 'Code Review', icon: <Terminal size={16} />, color: '#16a34a', link: '#' },
-    { id: 5, label: 'Cloud Credits', icon: <Zap size={16} />, color: '#2563eb', link: '#' },
-    { id: 6, label: 'Design Audit', icon: <Briefcase size={16} />, color: '#9333ea', link: '#' }, // Using generic icon
-    { id: 7, label: 'Free Tools', icon: <Download size={16} />, color: '#0891b2', link: '#' },
-    { id: 8, label: 'Mystery Gift', icon: <Sparkles size={16} />, color: '#f59e0b', link: '#' },
+    { id: 1, label: 'Mentorship', icon: <Video size={14} />, color: '#7c3aed', textColor: '#ffffff', link: 'https://cal.com/elormoscar' }, // Violet
+    { id: 2, label: 'Course', icon: <Code size={14} />, color: '#2563eb', textColor: '#ffffff', link: '#' }, // Blue
+    { id: 3, label: 'UI Kit', icon: <Palette size={14} />, color: '#db2777', textColor: '#ffffff', link: '#' }, // Pink
+    { id: 4, label: 'Review', icon: <Terminal size={14} />, color: '#059669', textColor: '#ffffff', link: '#' }, // Emerald
+    { id: 5, label: 'Cloud $', icon: <Zap size={14} />, color: '#ca8a04', textColor: '#ffffff', link: '#' }, // Yellow/Gold
+    { id: 6, label: 'Audit', icon: <Briefcase size={14} />, color: '#4f46e5', textColor: '#ffffff', link: '#' }, // Indigo
+    { id: 7, label: 'Tools', icon: <Download size={14} />, color: '#0891b2', textColor: '#ffffff', link: '#' }, // Cyan
+    { id: 8, label: 'Mystery', icon: <Sparkles size={14} />, color: '#dc2626', textColor: '#ffffff', link: '#' }, // Red
 ];
 
 const SpinToWin = () => {
@@ -146,18 +146,26 @@ const SpinToWin = () => {
                                             )`
                                         }}
                                     >
-                                        {/* Segments Divider Lines & Icons */}
-                                        {prizes.map((_, i) => (
-                                            <div
-                                                key={i}
-                                                className="absolute w-full h-full top-0 left-0"
-                                                style={{ transform: `rotate(${i * (360 / prizes.length)}deg)` }}
-                                            >
-                                                <div className="absolute top-0 left-1/2 w-[1px] h-1/2 bg-white/20 origin-bottom -translate-x-1/2"></div>
-                                            </div>
-                                        ))}
+                                        {/* Segments Text & Icons */}
+                                        {prizes.map((prize, i) => {
+                                            const rotation = (360 / prizes.length) * i + (360 / prizes.length) / 2;
+                                            return (
+                                                <div
+                                                    key={prize.id}
+                                                    className="absolute w-full h-full top-0 left-0 flex justify-center pt-4"
+                                                    style={{
+                                                        transform: `rotate(${rotation}deg)`,
+                                                    }}
+                                                >
+                                                    <div className="flex flex-col items-center gap-1 font-bold text-[10px] md:text-xs uppercase tracking-wider origin-top" style={{ color: prize.textColor }}>
+                                                        <span className="bg-black/20 p-1 rounded-full backdrop-blur-sm">{prize.icon}</span>
+                                                        <span className="drop-shadow-md">{prize.label}</span>
+                                                    </div>
+                                                </div>
+                                            );
+                                        })}
 
-                                        {/* Inner Hub Shine */}
+                                        {/* Inner Hub Shine (Overlay) */}
                                         <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-transparent via-white/10 to-transparent pointer-events-none"></div>
                                     </motion.div>
 
