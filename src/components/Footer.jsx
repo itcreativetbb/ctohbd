@@ -6,9 +6,9 @@ const Footer = () => {
         <footer className="bg-[#0d1117] border-t border-[#30363d] py-12">
             <div className="max-w-6xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center space-y-6 md:space-y-0">
                 <div className="text-center md:text-left">
-                    <h3 className="font-bold text-xl text-white font-mono">Elorm Oscar</h3>
+                    <h3 className="font-bold text-xl text-white font-mono">Chief Technology Officer Elorm Oscar</h3>
                     <p className="text-gray-500 text-sm mt-1">
-                        Powered by <span className="text-accent">Coffee</span> & <span className="text-accent">Code</span> & <span className="text-accent">I.T CREATIVE TBB</span>
+                        Powered by <span className="text-accent">Padocreative Team</span>
                     </p>
                 </div>
 
