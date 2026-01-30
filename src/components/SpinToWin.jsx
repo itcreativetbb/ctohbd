@@ -1,16 +1,15 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Gift, X, PartyPopper, ChevronRight, Palette, Code, Video, Download, Terminal, Zap, Briefcase, Sparkles, User, ArrowRight } from 'lucide-react';
+import { Gift, X, PartyPopper, ChevronRight, Palette, Code, Video, Download, Terminal, Zap, Briefcase, Sparkles, User, ArrowRight, Bot, Image, Crown, Gamepad2, Phone, Layout } from 'lucide-react';
 
 const prizes = [
-    { id: 1, label: 'Mentorship', icon: <Video size={14} />, color: '#7c3aed', textColor: '#ffffff', link: 'https://cal.com/elormoscar' }, // Violet
-    { id: 2, label: 'Course', icon: <Code size={14} />, color: '#2563eb', textColor: '#ffffff', link: '#' }, // Blue
-    { id: 3, label: 'UI Kit', icon: <Palette size={14} />, color: '#db2777', textColor: '#ffffff', link: '#' }, // Pink
-    { id: 4, label: 'Review', icon: <Terminal size={14} />, color: '#059669', textColor: '#ffffff', link: '#' }, // Emerald
-    { id: 5, label: 'Cloud $', icon: <Zap size={14} />, color: '#ca8a04', textColor: '#ffffff', link: '#' }, // Yellow/Gold
-    { id: 6, label: 'Audit', icon: <Briefcase size={14} />, color: '#4f46e5', textColor: '#ffffff', link: '#' }, // Indigo
-    { id: 7, label: 'Tools', icon: <Download size={14} />, color: '#0891b2', textColor: '#ffffff', link: '#' }, // Cyan
-    { id: 8, label: 'Mystery', icon: <Sparkles size={14} />, color: '#dc2626', textColor: '#ffffff', link: '#' }, // Red
+    { id: 1, label: 'AI Tools', icon: <Bot size={14} />, color: '#7c3aed', textColor: '#ffffff', link: '#' },
+    { id: 2, label: 'Image Prompt', icon: <Image size={14} />, color: '#ec4899', textColor: '#ffffff', link: '#' },
+    { id: 3, label: 'Dev Tools', icon: <Terminal size={14} />, color: '#2563eb', textColor: '#ffffff', link: '#' },
+    { id: 4, label: 'Courses', icon: <Video size={14} />, color: '#16a34a', textColor: '#ffffff', link: '#' },
+    { id: 5, label: 'Premium Sub', fullLabel: 'Premium Subscription', icon: <Crown size={14} />, color: '#ca8a04', textColor: '#ffffff', link: '#' }, // Shortened for wheel
+    { id: 6, label: 'UI/UX Kit', fullLabel: 'UI / UX Components', icon: <Layout size={14} />, color: '#ea580c', textColor: '#ffffff', link: '#' }, // Shortened for wheel
+    { id: 7, label: 'Gaming', icon: <Gamepad2 size={14} />, color: '#dc2626', textColor: '#ffffff', link: '#' },
+    { id: 8, label: 'Consultation', fullLabel: 'Free Consultation Service', icon: <Phone size={14} />, color: '#0891b2', textColor: '#ffffff', link: '#' }, // Shortened for wheel
 ];
 
 const SpinToWin = () => {
@@ -258,8 +257,9 @@ const SpinToWin = () => {
                                                 <p className="text-gray-400 text-sm mb-2">
                                                     {userName}, you won:
                                                 </p>
-                                                <h4 className="text-xl font-bold text-accent mb-4 flex items-center justify-center gap-2">
-                                                    {wonPrize.icon} {wonPrize.label}
+                                                <h4 className="text-xl font-bold text-accent mb-4 flex items-center justify-center gap-2 text-center">
+                                                    {wonPrize.icon} <br />
+                                                    {wonPrize.fullLabel || wonPrize.label}
                                                 </h4>
                                                 <a
                                                     href={wonPrize.link}
