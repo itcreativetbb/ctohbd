@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Gift, CreditCard, Copy, Check, Heart, Coffee, ExternalLink, PartyPopper } from 'lucide-react';
-import confetti from 'canvas-confetti';
 import { usePaystackPayment } from 'react-paystack';
 import { supabase } from '../supabaseClient';
 
@@ -71,7 +70,8 @@ const GiftBoxContent = () => {
         setTimeout(() => setIsCopied(false), 2000);
     };
 
-    const triggerConfetti = () => {
+    const triggerConfetti = async () => {
+        const confetti = (await import('canvas-confetti')).default;
         const duration = 3000;
         const animationEnd = Date.now() + duration;
         const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
