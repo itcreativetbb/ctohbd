@@ -127,14 +127,17 @@ const SpinToWin = () => {
 
                             <div className="relative w-72 h-72 md:w-80 md:h-80 mb-8 z-10">
                                 {/* Pointer */}
-                                <div className="absolute top-[-15px] left-1/2 -translate-x-1/2 z-30 filter drop-shadow-xl">
-                                    <div className="w-8 h-10 bg-white clip-path-polygon-[50%_100%,0%_0%,100%_0%] shadow-lg"></div>
+                                <div className="absolute top-[-20px] left-1/2 -translate-x-1/2 z-30 filter drop-shadow-xl">
+                                    <div
+                                        className="w-10 h-12 bg-gradient-to-b from-white to-gray-200"
+                                        style={{ clipPath: 'polygon(50% 100%, 0% 0%, 100% 0%)' }}
+                                    ></div>
                                 </div>
 
                                 {/* Wheel Container with Border */}
-                                <div className="relative w-full h-full p-2 rounded-full bg-gradient-to-b from-[#30363d] to-[#161b22] shadow-2xl">
+                                <div className="relative w-full h-full p-3 rounded-full bg-gradient-to-b from-[#4a5568] to-[#1a202c] shadow-[0_0_30px_rgba(0,0,0,0.8)] border-4 border-[#2d3748]">
                                     <motion.div
-                                        className="w-full h-full rounded-full relative overflow-hidden shadow-inner"
+                                        className="w-full h-full rounded-full relative overflow-hidden shadow-[inset_0_0_20px_rgba(0,0,0,0.5)]"
                                         animate={{ rotate: rotation }}
                                         transition={{ duration: 5, type: "tween", ease: [0.13, 0.99, 0.29, 0.99] }} // Custom bezier for realistic spin
                                         style={{
