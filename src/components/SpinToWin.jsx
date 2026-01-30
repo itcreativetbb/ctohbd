@@ -161,10 +161,10 @@ const SpinToWin = () => {
                                         animate={{ rotate: rotation }}
                                         transition={{ duration: 5, type: "tween", ease: [0.13, 0.99, 0.29, 0.99] }} // Custom bezier for realistic spin
                                         style={{
-                                            background: `conic - gradient(
+                                        background: `conic - gradient(
     ${ prizes.map((p, i) => `${p.color} ${i * (100 / prizes.length)}% ${(i + 1) * (100 / prizes.length)}%`).join(', ') }
 )`
-                                        }}
+                                    }}
                                     >
                                         {/* Segments Divider Lines & Icons */}
                                         {prizes.map((_, i) => (
