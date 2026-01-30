@@ -20,14 +20,16 @@ const Hero = () => {
     });
 
     useEffect(() => {
-        const targetDate = new Date('2026-02-03T00:00:00');
+        // Use explicit date construction to avoid timezone ambiguity (Year, MonthIndex, Day)
+        const targetDate = new Date(2026, 1, 3, 0, 0, 0); // Feb 3rd 2026
 
         const interval = setInterval(() => {
             const now = new Date();
             const difference = targetDate - now;
 
             if (difference > 0) {
-                const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+                // Use ceil for days to include partial days as a "full" day in the count
+                const days = Math.floor(difference / (1000 * 60 * 60 * 24)) + 1;
                 const hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
                 const minutes = Math.floor((difference / 1000 / 60) % 60);
                 const seconds = Math.floor((difference / 1000) % 60);

@@ -6,13 +6,13 @@ const awards = [
     {
         title: "The Founder",
         icon: <Crown className="w-12 h-12" />,
-        description: "Successfully established I.T CREATIVE TBB and delivered value to clients.",
+        description: "Successfully established I.T CREATIVE TBB, PADOCREAIVE and delivered value to clients.",
         color: "border-lime-400"
     },
     {
         title: "Master Architect",
         icon: <Trophy className="w-12 h-12" />,
-        description: "Designed scalable systems for Central Charis Chapel and other major projects.",
+        description: "Designed scalable systems for Padocreative and other major projects.",
         color: "border-yellow-400"
     },
     {

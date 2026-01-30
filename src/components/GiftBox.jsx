@@ -114,8 +114,8 @@ const GiftBox = () => {
                                 key={option.id}
                                 onClick={() => setSelectedGift(option)}
                                 className={`p-4 rounded-xl border transition-all duration-300 flex flex-col items-center gap-3 relative overflow-hidden group ${selectedGift?.id === option.id
-                                        ? 'bg-accent text-black border-accent scale-105 shadow-lg'
-                                        : 'bg-[#0d1117] border-[#30363d] text-gray-400 hover:border-accent hover:text-white'
+                                    ? 'bg-accent text-black border-accent scale-105 shadow-lg'
+                                    : 'bg-[#0d1117] border-[#30363d] text-gray-400 hover:border-accent hover:text-white'
                                     }`}
                             >
                                 <div className={`text-2xl ${selectedGift?.id === option.id ? 'text-black' : 'text-accent'}`}>{option.icon}</div>
@@ -152,14 +152,19 @@ const GiftBox = () => {
                             {loading ? "Processing..." : "Send Gift 🎁"}
                         </button>
 
-                        <div className="flex items-center justify-center gap-2 text-sm text-gray-500 font-mono mt-4">
-                            <span>Or Momo: 0559235426</span>
-                            <button
-                                onClick={() => handleCopy('0559235426')}
-                                className="hover:text-accent transition-colors"
-                            >
-                                {isCopied ? <Check size={14} className="text-green-500" /> : <Copy size={14} />}
-                            </button>
+                        <div className="flex flex-col items-center justify-center gap-2 text-sm text-gray-400 font-mono mt-4 bg-[#0d1117]/50 p-4 rounded border border-[#30363d]">
+                            <div className="flex items-center gap-2">
+                                <span>📲 Momo: <span className="text-accent font-bold">0557717398</span></span>
+                                <button
+                                    onClick={() => handleCopy('0557717398')}
+                                    className="hover:text-accent transition-colors"
+                                    title="Copy Number"
+                                >
+                                    {isCopied ? <Check size={14} className="text-green-500" /> : <Copy size={14} />}
+                                </button>
+                            </div>
+                            <span className="font-bold text-white">BERNARD KPETSEY MAWULI 👤</span>
+                            <span className="text-xs text-gray-500">Ref: <span className="text-accent">Birthday Gift 🎂</span></span>
                         </div>
                     </div>
                 </motion.div>

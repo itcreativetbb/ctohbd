@@ -60,8 +60,8 @@ const Guestbook = () => {
             }]);
 
         if (error) {
-            setError('Failed to send message. Please try again.');
-            console.error(error);
+            setError(`Failed to send message: ${error.message}`);
+            console.error('Supabase Insert Error:', error);
         } else {
             setFormData({ name: '', message: '' });
         }

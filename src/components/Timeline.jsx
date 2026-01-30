@@ -11,7 +11,7 @@ const milestones = [
     },
     {
         year: '2024',
-        title: 'Central Charis Chapel',
+        title: 'Padocreative',
         description: 'Architectured and deployed a comprehensive platform for the community using modern stack.',
         icon: <Award className="w-6 h-6" />
     },
