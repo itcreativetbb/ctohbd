@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { supabase } from '../supabaseClient';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Gift, X, PartyPopper, ChevronRight, Palette, Code, Video, Download, Terminal, Zap, Briefcase, Sparkles, User, ArrowRight, Bot, Image, Crown, Gamepad2, Phone, Layout } from 'lucide-react';
 
 const prizes = [
