@@ -1,6 +1,5 @@
-import React, { Suspense, lazy } from 'react';
-import Layout from './components/Layout';
 import React, { Suspense, lazy, useState, useEffect } from 'react';
+import Layout from './components/Layout';
 import Hero from './components/Hero';
 import Timeline from './components/Timeline';
 import { AnimatePresence } from 'framer-motion';
