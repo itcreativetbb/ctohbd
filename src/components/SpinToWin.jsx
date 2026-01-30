@@ -84,12 +84,27 @@ const SpinToWin = () => {
 
         setRotation(finalRotation);
 
-        setTimeout(() => {
+        setTimeout(async () => {
             setIsSpinning(false);
             const prize = prizes[randomIndex];
             setWonPrize(prize);
             localStorage.setItem('cto_birthday_win_id', prize.id.toString());
             triggerConfetti();
+
+            // Save to Supabase
+            if (userName) {
+                try {
+                    await supabase.from('spin_winners').insert([
+                        {
+                            winner_name: userName,
+                            prize: prize.fullLabel || prize.label,
+                            prize_icon: 'gift' // generic icon reference or we could store more info
+                        }
+                    ]);
+                } catch (error) {
+                    console.error('Error saving win:', error);
+                }
+            }
         }, 5000);
     };
 
