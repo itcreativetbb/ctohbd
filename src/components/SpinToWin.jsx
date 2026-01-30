@@ -278,20 +278,23 @@ const SpinToWin = () => {
                                                     {wonPrize.icon} <br />
                                                     {wonPrize.fullLabel || wonPrize.label}
                                                 </h4>
-                                                <a
-                                                    href={wonPrize.link}
-                                                    target="_blank"
-                                                    rel="noreferrer"
-                                                    className="inline-block bg-accent hover:bg-white text-black font-bold py-2 px-6 rounded-full text-sm transition-colors"
+                                                <button
+                                                    onClick={() => {
+                                                        const uniqueCode = `CTO-BIRTHDAY-${Math.random().toString(36).substr(2, 6).toUpperCase()}`;
+                                                        const message = `Hi Oscar! 👋%0A%0A*Happy Birthday to You!* 🎂🎉%0A%0AI'm *${userName}* and I just spun your Birthday Wheel! 🎰%0A%0A🏆 I WON: *${wonPrize.fullLabel || wonPrize.label}*%0A🔐 CLAIM CODE: *${uniqueCode}*%0A%0AI'm here to claim my gift! Thank you for the opportunity! 🚀`;
+
+                                                        window.open(`https://wa.me/233204941734?text=${message}`, '_blank');
+                                                    }}
+                                                    className="inline-block bg-accent hover:bg-white text-black font-bold py-3 px-8 rounded-full text-sm transition-all shadow-lg hover:shadow-accent/50 hover:-translate-y-1"
                                                 >
-                                                    Claim Prize
-                                                </a>
+                                                    Claim Prize via WhatsApp 💬
+                                                </button>
                                             </motion.div>
                                         ) : (
                                             <button
                                                 onClick={spinWheel}
                                                 disabled={isSpinning}
-                                                className="w-full bg-white/10 hover:bg-white/20 text-white font-bold py-3 px-6 rounded-xl border border-white/20 transition-all disabled:opacity-50"
+                                                className="w-full bg-white/10 hover:bg-white/20 text-white font-bold py-3 px-6 rounded-xl border border-white/20 transition-all disabled:opacity-50 hover:scale-[1.02] active:scale-[0.98]"
                                             >
                                                 {isSpinning ? 'Spinning...' : 'SPIN NOW!'}
                                             </button>
