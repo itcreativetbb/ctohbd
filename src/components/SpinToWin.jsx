@@ -1,4 +1,3 @@
-```
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Gift, X, PartyPopper, ChevronRight, Palette, Code, Video, Download, Terminal, Zap, Briefcase, Sparkles } from 'lucide-react';
@@ -36,28 +35,6 @@ const SpinToWin = () => {
         }, 250);
     };
 
-    const handleSpin = () => {
-        if (isSpinning || wonPrize) return;
-
-        setIsSpinning(true);
-        const newRotation = rotation + 1800 + Math.random() * 360; // At least 5 spins
-        setRotation(newRotation);
-
-        setTimeout(() => {
-            setIsSpinning(false);
-            // Calculate prize based on rotation
-            const normalizedRotation = newRotation % 360;
-            const segmentAngle = 360 / prizes.length;
-            // The pointer is usually at the top (0 degrees) or right.
-            // Assuming pointer at top (0), and wheel rotates clockwise.
-            // The segment AT the pointer is what matters. 
-            // If rotation is 0, segment 1 is at top (if mapped that way).
-            // Let's simplify: random winning index first, then rotate TO it.
-
-        }, 5000); // 5s spin duration matching CSS/transition
-    };
-
-    // Better Logic: Decide winner first, then calculate rotation
     const spinWheel = () => {
         if (isSpinning) return;
         setWonPrize(null);
@@ -161,9 +138,9 @@ const SpinToWin = () => {
                                         animate={{ rotate: rotation }}
                                         transition={{ duration: 5, type: "tween", ease: [0.13, 0.99, 0.29, 0.99] }} // Custom bezier for realistic spin
                                         style={{
-                                            background: `conic - gradient(
-    ${ prizes.map((p, i) => `${p.color} ${i * (100 / prizes.length)}% ${(i + 1) * (100 / prizes.length)}%`).join(', ') }
-)`
+                                            background: `conic-gradient(
+                                                ${prizes.map((p, i) => `${p.color} ${i * (100 / prizes.length)}% ${(i + 1) * (100 / prizes.length)}%`).join(', ')}
+                                            )`
                                         }}
                                     >
                                         {/* Segments Divider Lines & Icons */}
@@ -171,12 +148,9 @@ const SpinToWin = () => {
                                             <div
                                                 key={i}
                                                 className="absolute w-full h-full top-0 left-0"
-                                                style={{ transform: `rotate(${ i * (360 / prizes.length)}deg)` }}
+                                                style={{ transform: `rotate(${i * (360 / prizes.length)}deg)` }}
                                             >
                                                 <div className="absolute top-0 left-1/2 w-[1px] h-1/2 bg-white/20 origin-bottom -translate-x-1/2"></div>
-
-                                                {/* Labels/Icons on the wheel? A bit complex to position perfectly without complex CSS. 
-                                                    Let's stick to the color segments and hub for now to ensure it looks clean. */}
                                             </div>
                                         ))}
 
