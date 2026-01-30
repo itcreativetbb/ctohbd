@@ -21,9 +21,12 @@ const SpinToWin = () => {
 
     // Check for existing win on mount
     React.useEffect(() => {
-        const savedPrize = localStorage.getItem('cto_birthday_win');
-        if (savedPrize) {
-            setWonPrize(JSON.parse(savedPrize));
+        const savedPrizeId = localStorage.getItem('cto_birthday_win_id');
+        if (savedPrizeId) {
+            const foundPrize = prizes.find(p => p.id === parseInt(savedPrizeId));
+            if (foundPrize) {
+                setWonPrize(foundPrize);
+            }
         }
     }, []);
 
@@ -65,8 +68,9 @@ const SpinToWin = () => {
 
         setTimeout(() => {
             setIsSpinning(false);
-            setWonPrize(prizes[randomIndex]);
-            localStorage.setItem('cto_birthday_win', JSON.stringify(prizes[randomIndex]));
+            const prize = prizes[randomIndex];
+            setWonPrize(prize);
+            localStorage.setItem('cto_birthday_win_id', prize.id.toString());
             triggerConfetti();
         }, 5000);
     };
