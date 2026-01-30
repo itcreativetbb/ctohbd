@@ -33,7 +33,6 @@ function App() {
 
       <main className="relative z-10">
         <Hero />
-        <DonorTicker />
         <Timeline />
 
         <Suspense fallback={<div className="py-20 text-center text-gray-500">Loading experience...</div>}>
@@ -41,6 +40,7 @@ function App() {
           <HallOfFame />
           <Guestbook />
           <GiftBox />
+          <DonorTicker />
           <SpinToWin />
         </Suspense>
       </main>
