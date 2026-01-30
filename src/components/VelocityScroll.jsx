@@ -5,8 +5,8 @@ import ScrollTrigger from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 const VelocityScroll = ({
-    texts = [],
-    velocity = 100,
+    items = [], // Renamed from texts to items for clarity (backwards compat supported if mapped)
+    defaultVelocity = 100, // renamed prop for clarity
     className = '',
     damping = 50,
     stiffness = 400,
@@ -19,6 +19,9 @@ const VelocityScroll = ({
     const containerRef = useRef([]);
     const scrollerRef = useRef([]);
     const copyRefs = useRef([]);
+
+    // Support single row for now as per ticker requirement
+    const rows = [items];
 
     // State to track width/copies for each row
     const [rowConfig, setRowConfig] = useState([]);
@@ -35,38 +38,35 @@ const VelocityScroll = ({
         rafId: null
     });
 
-    // Initialize state arrays on mount or texts change
+    // Initialize state arrays on mount or items change
     useEffect(() => {
-        animationState.current.baseX = new Array(texts.length).fill(0);
-        animationState.current.directionFactors = new Array(texts.length).fill(1);
-    }, [texts.length]);
+        animationState.current.baseX = new Array(rows.length).fill(0);
+        animationState.current.directionFactors = new Array(rows.length).fill(1);
+    }, [items.length]);
 
     // Calculate copies needed to fill screen
     useEffect(() => {
         const calculateCopies = () => {
-            const newConfig = texts.map((_, index) => {
-                // If refs aren't ready, verify next tick
+            const newConfig = rows.map((_, index) => {
                 if (!copyRefs.current[index] || !containerRef.current[index]) {
-                    return { singleWidth: 0, copies: 15 };
+                    return { singleWidth: 0, copies: 10 };
                 }
 
                 const singleCopyWidth = copyRefs.current[index].offsetWidth;
                 const containerWidth = containerRef.current[index].offsetWidth;
                 const viewportWidth = window.innerWidth;
 
-                // Avoid division by zero
                 if (singleCopyWidth === 0) return { singleWidth: 0, copies: 2 };
 
                 const effectiveWidth = Math.max(containerWidth, viewportWidth);
-                const minCopies = Math.ceil((effectiveWidth * 2.5) / singleCopyWidth);
-                const optimalCopies = Math.max(minCopies, 8);
+                const minCopies = Math.ceil((effectiveWidth * 2) / singleCopyWidth);
+                const optimalCopies = Math.max(minCopies, 6); // Reduced count for cards to avoid heavy DOM
 
                 return { singleWidth: singleCopyWidth, copies: optimalCopies };
             });
             setRowConfig(newConfig);
         };
 
-        // Delay slightly to ensure render
         const timer = setTimeout(calculateCopies, 100);
         window.addEventListener('resize', calculateCopies);
 
@@ -74,7 +74,7 @@ const VelocityScroll = ({
             clearTimeout(timer);
             window.removeEventListener('resize', calculateCopies);
         }
-    }, [texts]);
+    }, [items]);
 
     useEffect(() => {
         const state = animationState.current;
@@ -108,12 +108,11 @@ const VelocityScroll = ({
             updateSmoothVelocity();
             updateVelocityFactor();
 
-            texts.forEach((_, index) => {
-                // Use DOM refs directly for transform to avoid React render loop
+            rows.forEach((_, index) => {
                 const rowScroller = scrollerRef.current[index];
                 if (!rowScroller) return;
 
-                const baseVelocity = index % 2 !== 0 ? -velocity : velocity;
+                const baseVelocity = index % 2 !== 0 ? -defaultVelocity : defaultVelocity;
                 let moveBy = (state.directionFactors[index] || 1) * baseVelocity * (delta / 1000);
 
                 if (state.velocityFactor < 0) {
@@ -126,16 +125,8 @@ const VelocityScroll = ({
 
                 state.baseX[index] = (state.baseX[index] || 0) + moveBy;
 
-                // Wrap logic
                 const singleWidth = rowConfig[index]?.singleWidth || 0;
                 if (singleWidth > 0) {
-                    // Standard wrap logic: wrap between -singleWidth and 0
-                    const range = singleWidth; // Since we wrap based on one copy width
-                    // We want to translate X. 
-                    // Logic: position = wrap(min, max, value)
-                    // wrap(-singleWidth, 0, baseX)
-
-                    // Custom wrap function inline
                     const min = -singleWidth;
                     const max = 0;
                     const v = state.baseX[index];
@@ -162,10 +153,8 @@ const VelocityScroll = ({
             state.lastScrollY = currentScrollY;
         };
 
-        // Start Animation Loop
         state.rafId = requestAnimationFrame(animate);
 
-        // Setup ScrollTrigger
         const trigger = ScrollTrigger.create({
             onUpdate: updateScrollVelocity,
             start: 0,
@@ -176,11 +165,11 @@ const VelocityScroll = ({
             if (state.rafId) cancelAnimationFrame(state.rafId);
             if (trigger) trigger.kill();
         };
-    }, [texts, velocity, damping, stiffness, velocityMapping, rowConfig]);
+    }, [items, defaultVelocity, damping, stiffness, velocityMapping, rowConfig]);
 
     return (
         <section className="width-full overflow-hidden">
-            {texts.map((text, index) => (
+            {rows.map((rowItems, index) => (
                 <div
                     key={index}
                     ref={el => containerRef.current[index] = el}
@@ -189,18 +178,24 @@ const VelocityScroll = ({
                 >
                     <div
                         ref={el => scrollerRef.current[index] = el}
-                        className={`${scrollerClassName} flex whitespace-nowrap text-center font-sans font-bold tracking-[-0.02em] drop-shadow`}
+                        className={`${scrollerClassName} flex whitespace-nowrap`}
                         style={scrollerStyle}
                     >
-                        {/* Render copies */}
-                        {Array.from({ length: rowConfig[index]?.copies || 15 }).map((_, spanIndex) => (
-                            <span
-                                key={spanIndex}
-                                className={`flex-shrink-0 ${className} px-4`}
-                                ref={spanIndex === 0 ? (el => copyRefs.current[index] = el) : null}
+                        {/* We render a BLOCK of items, and then replicate THAT block */}
+                        {/* Original logic replicated 'text' N times. 
+                             Here we replicate the entire list of items N times to maintain sequence */}
+                        {Array.from({ length: rowConfig[index]?.copies || 6 }).map((_, copyIndex) => (
+                            <div
+                                key={copyIndex}
+                                className="flex flex-shrink-0"
+                                ref={copyIndex === 0 ? (el => copyRefs.current[index] = el) : null}
                             >
-                                {text}&nbsp;
-                            </span>
+                                {rowItems.map((item, itemIndex) => (
+                                    <div key={itemIndex} className={className}>
+                                        {item}
+                                    </div>
+                                ))}
+                            </div>
                         ))}
                     </div>
                 </div>
