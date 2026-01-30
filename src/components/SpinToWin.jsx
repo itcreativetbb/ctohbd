@@ -150,26 +150,26 @@ const SpinToWin = () => {
                             animate={{ scale: 1, opacity: 1 }}
                             exit={{ scale: 0.5, opacity: 0 }}
                             onClick={(e) => e.stopPropagation()}
-                            className="bg-[#161b22] border border-[#30363d] rounded-2xl p-8 max-w-md w-full relative shadow-2xl overflow-hidden"
+                            className="bg-[#161b22] border border-[#30363d] rounded-2xl p-6 md:p-8 max-w-md w-[90%] md:w-full relative shadow-2xl overflow-hidden"
                         >
                             <button
                                 onClick={() => setIsOpen(false)}
-                                className="absolute top-4 right-4 text-gray-400 hover:text-white"
+                                className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors p-2 bg-white/5 rounded-full z-30"
                             >
-                                <X />
+                                <X size={20} />
                             </button>
 
-                            <h3 className="text-2xl font-bold text-center text-white mb-8">Spin & Win! 🎁</h3>
+                            <h3 className="text-2xl font-bold text-center text-white mb-6 md:mb-8">Spin & Win! 🎁</h3>
 
-                            <div className="relative w-64 h-64 mx-auto mb-8">
+                            <div className="relative w-56 h-56 md:w-64 md:h-64 mx-auto mb-8">
                                 {/* Pointer */}
                                 <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-4 z-20 w-8 h-8 text-accent">
-                                    <div className="w-0 h-0 border-l-[10px] border-l-transparent border-t-[20px] border-t-accent border-r-[10px] border-r-transparent"></div>
+                                    <div className="w-0 h-0 border-l-[10px] border-l-transparent border-t-[20px] border-t-accent border-r-[10px] border-r-transparent filter drop-shadow-lg"></div>
                                 </div>
 
                                 {/* Wheel */}
                                 <motion.div
-                                    className="w-full h-full rounded-full border-4 border-[#30363d] relative overflow-hidden transition-transform ease-out"
+                                    className="w-full h-full rounded-full border-4 border-[#30363d] relative overflow-hidden transition-transform ease-out shadow-inner"
                                     animate={{ rotate: rotation }}
                                     transition={{ duration: 4, type: "tween", ease: "circOut" }}
                                     style={{
@@ -179,6 +179,7 @@ const SpinToWin = () => {
                                     }}
                                 >
                                     {/* Lines dividing segments (optional/styled) */}
+                                    <div className="absolute inset-0 rounded-full border-4 border-white/5 pointer-events-none"></div>
                                 </motion.div>
                             </div>
 
