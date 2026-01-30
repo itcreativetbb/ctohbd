@@ -109,10 +109,10 @@ const SpinToWin = () => {
                             animate={{ scale: 1, opacity: 1, y: 0 }}
                             exit={{ scale: 0.8, opacity: 0, y: 50 }}
                             onClick={(e) => e.stopPropagation()}
-                            className="bg-[#0f1218] border border-[#30363d] rounded-3xl p-6 md:p-10 w-[95%] md:max-w-2xl w-full relative shadow-[0_0_50px_rgba(0,0,0,0.5)] overflow-hidden flex flex-col items-center"
+                            className="bg-gradient-to-b from-[#1c2128] to-[#161b22] border-2 border-white/10 rounded-3xl p-6 md:p-10 w-[95%] md:max-w-xl w-full relative shadow-[0_0_60px_rgba(124,58,237,0.15)] overflow-hidden flex flex-col items-center"
                         >
                             {/* Background Glow */}
-                            <div className="absolute top-0 transform -translate-y-1/2 w-full h-64 bg-accent/20 blur-[100px] pointer-events-none"></div>
+                            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-[400px] bg-accent/5 blur-[120px] pointer-events-none rounded-full"></div>
 
                             <button
                                 onClick={() => setIsOpen(false)}
