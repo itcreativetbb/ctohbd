@@ -125,7 +125,7 @@ const SpinToWin = () => {
                                 Spin & <span className="text-accent">Win</span>
                             </h3>
 
-                            <div className="relative w-72 h-72 md:w-80 md:h-80 mb-8 z-10">
+                            <div className="relative w-72 h-72 md:w-80 md:h-80 mb-8 z-10 shrink-0">
                                 {/* Pointer */}
                                 <div className="absolute top-[-20px] left-1/2 -translate-x-1/2 z-30 filter drop-shadow-xl">
                                     <div
@@ -152,14 +152,19 @@ const SpinToWin = () => {
                                             return (
                                                 <div
                                                     key={prize.id}
-                                                    className="absolute w-full h-full top-0 left-0 flex justify-center pt-4"
+                                                    className="absolute w-full h-full top-0 left-0 flex justify-center pt-2"
                                                     style={{
                                                         transform: `rotate(${rotation}deg)`,
                                                     }}
                                                 >
-                                                    <div className="flex flex-col items-center gap-1 font-bold text-[10px] md:text-xs uppercase tracking-wider origin-top" style={{ color: prize.textColor }}>
-                                                        <span className="bg-black/20 p-1 rounded-full backdrop-blur-sm">{prize.icon}</span>
-                                                        <span className="drop-shadow-md">{prize.label}</span>
+                                                    <div className="flex flex-col items-center gap-2" style={{ color: prize.textColor }}>
+                                                        <span className="bg-black/20 p-1.5 rounded-full backdrop-blur-sm shadow-sm">{prize.icon}</span>
+                                                        <span
+                                                            className="font-bold text-[10px] md:text-xs uppercase tracking-wider drop-shadow-md"
+                                                            style={{ writingMode: 'vertical-rl', textOrientation: 'mixed' }}
+                                                        >
+                                                            {prize.label}
+                                                        </span>
                                                     </div>
                                                 </div>
                                             );
