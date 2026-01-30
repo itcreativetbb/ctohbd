@@ -24,7 +24,7 @@ function App() {
   }, []);
 
   return (
-    <div className="bg-[#0d1117] min-h-screen text-gray-300 font-sans selection:bg-accent selection:text-black scroll-smooth">
+    <div className="bg-[#0d1117] min-h-screen text-gray-300 font-sans selection:bg-accent selection:text-black scroll-smooth overflow-x-hidden">
       <AnimatePresence>
         {loading && <LoadingScreen />}
       </AnimatePresence>

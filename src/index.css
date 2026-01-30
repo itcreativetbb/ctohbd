@@ -8,12 +8,10 @@
 }
 
 @layer base {
+
+  html,
   body {
-    background-color: var(--color-background);
-    color: white;
-    font-family: var(--font-sans);
-    -webkit-font-smoothing: antialiased;
-    overflow-x: hidden;
+    @apply scroll-smooth bg-[#0d1117] overflow-x-hidden;
   }
 }
 
