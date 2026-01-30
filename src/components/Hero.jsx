@@ -100,10 +100,9 @@ const Hero = () => {
                         className="font-bold font-sans tracking-tight leading-tight text-left"
                         style={{ fontSize: "clamp(3rem, 6vw, 5rem)" }}
                     >
-                        Building the <br />
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-purple-500">Future</span>
-                        <span className="text-white"> & </span> <br />
-                        Breaking <span className="text-accent underline decoration-4 decoration-accent/30">Changes</span>
+                        Refactoring the Past, <br />
+                        Optimizing the <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-purple-500">Present</span> <br />
+                        & Deploying the <span className="text-accent underline decoration-4 decoration-accent/30">Future</span>
                     </motion.h1>
 
                     {/* Countdown */}
