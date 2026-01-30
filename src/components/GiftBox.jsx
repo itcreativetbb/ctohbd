@@ -98,6 +98,7 @@ const GiftBoxContent = () => {
             .insert([{
                 item_name: giftItem,
                 donor_name: donorName,
+                amount: amountVal // Storing amount
             }]);
         if (error) console.error('Error logging gift:', error);
     };

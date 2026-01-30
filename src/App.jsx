@@ -6,6 +6,7 @@ import Skills from './components/Skills';
 import HallOfFame from './components/HallOfFame';
 import Guestbook from './components/Guestbook';
 import GiftBox from './components/GiftBox';
+import DonorTicker from './components/DonorTicker';
 import Footer from './components/Footer';
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
       <HallOfFame />
       <Guestbook />
       <GiftBox />
+      <DonorTicker />
       <Footer />
     </Layout>
   );
