@@ -115,9 +115,7 @@ const SpinToWin = () => {
                 <div className="max-w-4xl mx-auto px-4 text-center">
                     <motion.div
                         whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        onClick={() => setIsOpen(true)}
-                        className="cursor-pointer bg-gradient-to-r from-purple-600 via-pink-600 to-accent p-1 rounded-2xl inline-block shadow-2xl box-glow"
+                        className="bg-gradient-to-r from-purple-600 via-pink-600 to-accent p-1 rounded-2xl inline-block shadow-2xl box-glow"
                     >
                         <div className="bg-[#161b22] rounded-xl p-8 md:p-12 flex flex-col items-center">
                             <PartyPopper className="w-16 h-16 text-yellow-400 mb-6 animate-bounce" />
@@ -125,9 +123,13 @@ const SpinToWin = () => {
                             <p className="text-gray-300 text-lg mb-8 max-w-lg">
                                 Feeling lucky? Spin the wheel to win exclusive developer resources, premium assets, and more!
                             </p>
-                            <button className="bg-accent text-black font-bold py-3 px-8 rounded-full text-xl flex items-center gap-2 hover:bg-white transition-colors">
+                            <motion.button
+                                whileTap={{ scale: 0.95 }}
+                                onClick={() => setIsOpen(true)}
+                                className="bg-accent text-black font-bold py-3 px-8 rounded-full text-xl flex items-center gap-2 hover:bg-white transition-colors cursor-pointer"
+                            >
                                 Spin to Win <ChevronRight />
-                            </button>
+                            </motion.button>
                         </div>
                     </motion.div>
                 </div>
