@@ -43,7 +43,7 @@ const Timeline = () => {
                     <span className="border-b-4 border-accent pb-2">Changelog & History</span>
                 </motion.h2>
 
-                <div className="relative border-l-4 border-white/10 ml-4 md:ml-1/2 space-y-16 md:space-y-24">
+                <div className="relative border-l-4 border-white/10 ml-4 md:ml-[50%] space-y-16 md:space-y-24">
                     {milestones.map((item, index) => (
                         <TimelineItem key={index} item={item} index={index} />
                     ))}

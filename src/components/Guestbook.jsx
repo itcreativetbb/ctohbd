@@ -87,7 +87,7 @@ const Guestbook = () => {
                         initial={{ opacity: 0, x: -50 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
-                        className="bg-[#161b22]/80 backdrop-blur-md border border-[#30363d] p-6 rounded-xl shadow-2xl box-glow"
+                        className="bg-[#161b22]/80 backdrop-blur-md border border-[#30363d] p-4 md:p-6 rounded-xl shadow-2xl box-glow"
                     >
                         <div className="flex items-center gap-2 mb-6 border-b border-[#30363d] pb-4">
                             <Terminal className="text-accent w-5 h-5" />

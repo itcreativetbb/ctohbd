@@ -31,9 +31,25 @@ const awards = [
 
 const HallOfFame = () => {
     return (
-        <section id="awards" className="py-24 relative">
-            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-accent/5 to-transparent pointer-events-none"></div>
-            <div className="max-w-7xl mx-auto px-4">
+        <section id="awards" className="py-24 relative overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-accent/5 to-transparent pointer-events-none z-10"></div>
+
+            {/* Blended Secondary Image */}
+            <div className="absolute inset-0 z-0 opacity-10 pointer-events-none md:opacity-20 mix-blend-luminosity">
+                <div className="absolute left-0 bottom-0 w-full md:w-1/2 h-full">
+                    <img
+                        src="/images/elorm-secondary.jpg"
+                        alt="Background"
+                        className="w-full h-full object-cover object-bottom"
+                        style={{
+                            maskImage: 'linear-gradient(to right, black 20%, transparent 100%)',
+                            WebkitMaskImage: 'linear-gradient(to right, black 20%, transparent 100%)'
+                        }}
+                    />
+                </div>
+            </div>
+
+            <div className="max-w-7xl mx-auto px-4 relative z-20">
                 <motion.h2
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
