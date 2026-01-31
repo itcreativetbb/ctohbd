@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
+import confetti from 'canvas-confetti';
+
 const Hero = () => {
     const [text, setText] = useState('');
     const [showCursor, setShowCursor] = useState(true);
+    const [isBirthday, setIsBirthday] = useState(false);
     const fullText = [
         "npx celebrate-birthday --user full-stack-dev",
         "npm install --save happiness@latest",
@@ -29,7 +32,7 @@ const Hero = () => {
 
             if (difference > 0) {
                 // Use ceil for days to include partial days as a "full" day in the count
-                const days = Math.floor(difference / (1000 * 60 * 60 * 24)) + 1;
+                const days = Math.floor(difference / (1000 * 60 * 60 * 24));
                 const hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
                 const minutes = Math.floor((difference / 1000 / 60) % 60);
                 const seconds = Math.floor((difference / 1000) % 60);
@@ -38,11 +41,35 @@ const Hero = () => {
             } else {
                 clearInterval(interval);
                 setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+                if (!isBirthday) {
+                    setIsBirthday(true);
+                    triggerConfetti();
+                }
             }
         }, 1000);
 
         return () => clearInterval(interval);
-    }, []);
+    }, [isBirthday]);
+
+    const triggerConfetti = () => {
+        const duration = 15 * 1000;
+        const animationEnd = Date.now() + duration;
+        const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+        const randomInRange = (min, max) => Math.random() * (max - min) + min;
+
+        const interval = setInterval(function () {
+            const timeLeft = animationEnd - Date.now();
+
+            if (timeLeft <= 0) {
+                return clearInterval(interval);
+            }
+
+            const particleCount = 50 * (timeLeft / duration);
+            confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
+            confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
+        }, 250);
+    };
 
     useEffect(() => {
         if (lineIndex < fullText.length) {
@@ -100,9 +127,18 @@ const Hero = () => {
                         className="font-bold font-sans tracking-tight leading-tight text-left"
                         style={{ fontSize: "clamp(2rem, 4vw, 3.5rem)" }}
                     >
-                        Refactoring the Past, <br />
-                        Optimizing the <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-purple-500">Present</span> <br />
-                        & Deploying the <span className="text-accent underline decoration-4 decoration-accent/30">Future</span>
+                        {isBirthday ? (
+                            <>
+                                Happy Birthday Chief, <br />
+                                Glory and blessing
+                            </>
+                        ) : (
+                            <>
+                                Refactoring the Past, <br />
+                                Optimizing the <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-purple-500">Present</span> <br />
+                                & Deploying the <span className="text-accent underline decoration-4 decoration-accent/30">Future</span>
+                            </>
+                        )}
                     </motion.h1>
 
                     {/* Countdown */}
