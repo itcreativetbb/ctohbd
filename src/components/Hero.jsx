@@ -32,7 +32,7 @@ const Hero = () => {
 
             if (difference > 0) {
                 // Use ceil for days to include partial days as a "full" day in the count
-                const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+                const days = Math.floor(difference / (1000 * 60 * 60 * 24)) + 1;
                 const hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
                 const minutes = Math.floor((difference / 1000 / 60) % 60);
                 const seconds = Math.floor((difference / 1000) % 60);
