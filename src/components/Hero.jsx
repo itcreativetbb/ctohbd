@@ -98,7 +98,7 @@ const Hero = () => {
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.8 }}
                         className="font-bold font-sans tracking-tight leading-tight text-left"
-                        style={{ fontSize: "clamp(3rem, 6vw, 5rem)" }}
+                        style={{ fontSize: "clamp(2rem, 4vw, 3.5rem)" }}
                     >
                         Refactoring the Past, <br />
                         Optimizing the <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-purple-500">Present</span> <br />
